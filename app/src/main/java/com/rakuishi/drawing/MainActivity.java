@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.ar.core.Pose;
@@ -50,6 +51,15 @@ public class MainActivity extends AppCompatActivity
         MaterialFactory.makeOpaqueWithColor(this, new Color(android.graphics.Color.WHITE))
                 .thenAccept(material1 -> material = material1.makeCopy())
                 .exceptionally(this::handleMaterialError);
+
+        ImageView deleteButton = findViewById(R.id.delete_button);
+        deleteButton.setClipToOutline(true);
+        deleteButton.setOnClickListener(v -> {
+            for (Stroke stroke : strokes) {
+                stroke.clear();
+            }
+            strokes.clear();
+        });
     }
 
     private Void handleMaterialError(Throwable throwable) {
